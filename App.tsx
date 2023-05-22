@@ -1,12 +1,5 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {KeyboardAvoidingView, Platform, StyleSheet} from 'react-native';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import AddTodo from './components/AddTodo';
 import DateHead from './components/DateHead';
@@ -18,9 +11,14 @@ function App(): JSX.Element {
   return (
     <SafeAreaProvider>
       <SafeAreaView edges={['bottom']} style={styles.block}>
-        <DateHead date={today} />
-        <Empty />
-        <AddTodo />
+        <KeyboardAvoidingView
+          behavior={Platform.select({ios: 'padding'})}
+          // behavior={Platform.select({ios: 'padding', android: undefined})}
+          style={styles.avoid}>
+          <DateHead date={today} />
+          <Empty />
+          <AddTodo />
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -30,6 +28,9 @@ const styles = StyleSheet.create({
   block: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  avoid: {
+    flex: 1,
   },
 });
 
